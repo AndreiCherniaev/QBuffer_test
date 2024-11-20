@@ -38,20 +38,26 @@ void MainClass::Writer(){
 
 
 void MainClass::myflush(){
-    qDebug().noquote().nospace() << "myflush;" << buf.size() << " B;null=" << buf.buffer().isNull();
-    if(isOpen()){
-        write(buf.buffer().constData(), buf_cnt);
-        flush();
-        buf.close();
-        buf.open(QBuffer::WriteOnly);
-        qDebug() << "myflush;nul=" << buf.buffer().isNull() << buf.size();
-        buf_cnt= 0;
-    }
-    //buf.buffer().append('0');
-    //qDebug() << "myflush;nul=" << buf.buffer().isNull();
+    //Write to file
+    write(buf.buffer().constData(), buf_cnt);
+    flush();
+    qDebug().noquote().nospace() << "myflush;size;" << buf.size() << ";B;isNull;" << buf.buffer().isNull();
+
+    //Choose A) or B)
+    /*//A) Open-close way
+    buf.close();
+    buf.open(QBuffer::WriteOnly);*/
+    //B) Clear way
+    buf.buffer().clear();
+
+    QDataStream stream(&buf);
+    stream << (quint8)0xAB;
+
+    qDebug().noquote().nospace() << "myflush;size;" << buf.size() << ";B;isNull;" << buf.buffer().isNull();
+    buf_cnt= 0;
 }
 
 MainClass::~MainClass(){
-    qDebug() << "~;nul=" << buf.buffer().isNull() << "size" << buf.size() << "B";
+    qDebug().noquote().nospace() << "~;size;" << buf.size() << ";B;isNull;" << buf.buffer().isNull();
     write(buf.buffer().constData(), buf_cnt);
 }
