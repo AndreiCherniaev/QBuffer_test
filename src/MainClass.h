@@ -6,10 +6,8 @@
 #include <QTime>
 #include <QDebug>
 
-#include <QSerialPort>
-#include <QSerialPortInfo>
 #include <QBuffer>
- #include <QFile>
+#include <QFile>
 
 class MainClass : public QFile
 {

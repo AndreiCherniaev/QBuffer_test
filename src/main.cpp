@@ -1,6 +1,4 @@
 #include <QCoreApplication>
-#include <QSerialPort>
-#include <QSerialPortInfo>
 #include "MainClass.h"
 #include <signal.h>
 
