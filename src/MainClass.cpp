@@ -20,17 +20,9 @@ MainClass::MainClass(QObject *parent)
 }
 
 void MainClass::Writer(){
-    QByteArray arr;
-    for(uint i=0;i<71-8-1;i++) arr.append(i);
-
-    static qint64 ms= 0xAABBCCDD00112233;
-    ms++;
-
     const quint8 f_cnt= 0xFF;
 
     QDataStream stream(&buf);
-    //stream.writeRawData(arr.constData(), arr.size());
-    //stream.writeRawData((const char*)&ms, sizeof(ms)); //because `stream << ms` changes ordering from little to big endian
     stream << f_cnt;
 
     buf_cnt+= sizeof(f_cnt);
@@ -41,7 +33,7 @@ void MainClass::myflush(){
     //Write to file
     write(buf.buffer().constData(), buf_cnt);
     flush();
-    qDebug().noquote().nospace() << "myflush;size;" << buf.size() << ";B;isNull;" << buf.buffer().isNull();
+    qDebug().noquote().nospace() << "myflush;size;" << buf.size() << ";" << buf.buffer().size() << ";B;isNull;" << buf.buffer().isNull();
 
     //Choose A) or B)
     /*//A) Open-close way
@@ -53,11 +45,11 @@ void MainClass::myflush(){
     QDataStream stream(&buf);
     stream << (quint8)0xAB;
 
-    qDebug().noquote().nospace() << "myflush;size;" << buf.size() << ";B;isNull;" << buf.buffer().isNull();
+    qDebug().noquote().nospace() << "myflush;size;" << buf.size() << ";" << buf.buffer().size() << ";B;isNull;" << buf.buffer().isNull();
     buf_cnt= 0;
 }
 
 MainClass::~MainClass(){
-    qDebug().noquote().nospace() << "~;size;" << buf.size() << ";B;isNull;" << buf.buffer().isNull();
+    qDebug().noquote().nospace() << "~;size;" << buf.size() << ";" << buf.buffer().size() << ";B;isNull;" << buf.buffer().isNull();
     write(buf.buffer().constData(), buf_cnt);
 }
