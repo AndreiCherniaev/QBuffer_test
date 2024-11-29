@@ -19,6 +19,6 @@ public:
     ~MainClass();
 
 public slots:
-    void Writer();
+    void Writer(const quint8 f_cnt);
     void myflush();
 };

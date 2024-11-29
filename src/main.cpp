@@ -14,9 +14,9 @@ int main(int argc, char *argv[])
     signal(SIGINT, &SigInt_Handler);
 
     MainClass myApp(QCoreApplication::instance());
-    myApp.Writer();
+    myApp.Writer(0xFF);
     myApp.myflush();
-    //myApp.Writer();
+    myApp.Writer(0xAB);
 
     QMetaObject::invokeMethod(&a, "quit", Qt::QueuedConnection);
     int ret= QCoreApplication::exec();
